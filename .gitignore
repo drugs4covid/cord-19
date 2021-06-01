@@ -8,6 +8,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+cores/
+banana/
+custom-env/
+__pycache__/
 build/
 develop-eggs/
 dist/

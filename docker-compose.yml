@@ -1,0 +1,13 @@
+version: '3'
+services:
+  solr:
+    image: solr:8.3
+    ports:
+     - "8983:8983"
+    volumes:
+      - ./cores:/var/solr/data
+      - ./banana:/opt/solr/server/solr-webapp/webapp/banana
+    entrypoint:
+      - bash
+      - "-c"
+      - "precreate-core cord19-papers; precreate-core cord19-paragraphs; exec solr -f"
