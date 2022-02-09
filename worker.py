@@ -42,7 +42,7 @@ def parse(article):
                   annotation = Annotation(txt)
                   paragraph['mesh_codes']=[]
                   paragraph['chemicals']=[]
-                  paragraph['chemicals_terms']=[]
+                  paragraph['chemical_terms']=[]
                   paragraph['atc_codes']=[]
                   paragraph['atc_levels']=[]
                   paragraph['cid_codes']=[]
@@ -57,19 +57,19 @@ def parse(article):
                   paragraph['ncbi_taxonomy']=[]
                   paragraph['uniprot_codes']=[]
                   paragraph['diseases']=[]
-                  paragraph['diseases_terms']=[]
-                  paragraph['diseases_types']=[]
+                  paragraph['disease_terms']=[]
+                  paragraph['disease_types']=[]
                   paragraph['covid']=[]
                   paragraph['covid_terms']=[]
                   paragraph['genetics']=[]
-                  paragraph['genetics_terms']=[]
-                  paragraph['genetics_types']=[]
+                  paragraph['genetic_terms']=[]
+                  paragraph['genetic_types']=[]
                   if (annotation.has_chemicals()):
                       for chemical in annotation.get_chemicals():
                           if ('found_term' in chemical):
                               paragraph['chemicals'].append(chemical['found_term'])
                           if ('text_term' in chemical):
-                              paragraph['chemicals_terms'].append(chemical['text_term'])
+                              paragraph['chemical_terms'].append(chemical['text_term'])
                           if ('ATC' in chemical):
                              paragraph['atc_codes'].append(chemical['ATC'])
                           if ('ATC_level' in chemical):
@@ -81,9 +81,9 @@ def parse(article):
                           if ('found_term' in disease):
                              paragraph['diseases'].append(disease['found_term'])
                           if ('text_term' in disease):
-                             paragraph['diseases_terms'].append(disease['text_term'])
+                             paragraph['disease_terms'].append(disease['text_term'])
                           if ('semantic_type' in disease):
-                             paragraph['diseases_types'].append(disease['semantic_type'])
+                             paragraph['disease_types'].append(disease['semantic_type'])
                           if ('cui' in disease):
                              paragraph['cui_codes'].extend(disease['cui'])
                           if ('mesh_id' in disease):
@@ -113,11 +113,11 @@ def parse(article):
                           if ('found_term' in genetic):
                              paragraph['genetics'].append(genetic['found_term'])
                           if ('text_term' in genetic):
-                             paragraph['genetics_terms'].append(genetic['text_term'])
+                             paragraph['genetic_terms'].append(genetic['text_term'])
                           if ('uniprot_id' in genetic):
                              paragraph['uniprot_codes'].extend(genetic['uniprot_id'])
                           if ('type' in genetic):
-                             paragraph['genetics_types'].extend(genetic['type'])
+                             paragraph['genetic_types'].extend(genetic['type'])
                           if ('ncbi_gene_id' in genetic):
                              paragraph['ncbi_codes'].append(genetic['ncbi_gene_id'])
                           if ('ncbi_taxon_id' in genetic):
