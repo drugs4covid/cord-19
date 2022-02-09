@@ -41,7 +41,7 @@ def parse(article):
 
           result['paragraphs']=paragraphs
 
-    except AttributeError as e:
-        print("Missing attribute:",e)
+    except Exception as e:
+        print("Error parsing paragraph:",e)
 
     return result
