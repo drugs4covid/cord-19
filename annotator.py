@@ -12,6 +12,7 @@ import annotation as an
 def parse(paragraph):
     try:
       if ('text_t' in paragraph):
+          txt = paragraph['text_t']
           annotation = an.Annotation(txt)
           paragraph['mesh_codes']=[]
           paragraph['chemicals']=[]
