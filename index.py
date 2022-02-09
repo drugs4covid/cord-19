@@ -13,28 +13,28 @@ import time
 import sys
 import os
 
-if __name__ == '__main__':  
+if __name__ == '__main__':
 
     # Create a client instance. The timeout and authentication options are not required.
     server = 'http://localhost:8983/solr'
     solr_papers = pysolr.Solr(server+'/cord19-papers', always_commit=True, timeout=50)
     solr_paragraphs = pysolr.Solr(server+'/cord19-paragraphs', always_commit=True, timeout=50)
-        
-    
+
+
     if (len(sys.argv) != 2):
         print("usage: python index.py <input_directory>")
         sys.exit(2)
     directory        = sys.argv[1]
-    
-    
+
+
     # Load articles
     print("loading files from:",directory)
     files = [ os.path.join(directory, entry) for entry in os.listdir(directory) if os.path.isfile(os.path.join(directory, entry))]
     print(len(files),"files available")
-        
+
     print("Number of processors: ", mp.cpu_count())
     pool = mp.Pool(mp.cpu_count())
-   
+
     max_length = len(files)
     increment = 100
     min_idx = 0
@@ -58,20 +58,8 @@ if __name__ == '__main__':
         count_paragraphs += len(paragraphs)
         print("Paragraphs added:",count_paragraphs)
         solr_paragraphs.add(paragraphs)
-    
+
     pool.close()
     print('Time to parse articles: {} mins'.format(round((time.time() - t) / 60, 2)))
     print("Total Articles:",count_papers)
     print("Total Paragraphs:",count_paragraphs)
-   
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
