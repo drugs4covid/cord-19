@@ -5,11 +5,12 @@ Created on Wednesday February 9 09:45:05 2021
 
 @author: cbadenes
 """
+import annotator as annotators
 import pysolr
 import time
 import sys
 import requests
-
+import multiprocessing as mp
 
 
 if __name__ == '__main__':
@@ -20,26 +21,24 @@ if __name__ == '__main__':
         server = sys.argv[1]
         print("remote solr: ",server)
 
+    # Load articles
     #solr = pysolr.Solr(server+'/cord19-papers', always_commit=True, timeout=50)
     url = server+'/cord19-paragraphs'
     solr = pysolr.Solr(url, always_commit=True, timeout=50)
-
-    # Load articles
     print("reading paragraphs from:",url)
 
-    t = time.time()
-    count   = 0
-    rows    = 1
-    max     = 10
-    #for doc in solr.search('*:*',fl='id',sort='id ASC',cursorMark='*'):
-    for doc in solr.search('*:*',sort='id ASC',cursorMark='*'):
-        count += 1
-        if 'text_t' in doc:
-            if 'annotated' in doc:
-                continue
-            print("annotating",doc['id'],"...")
-        if (count >= max):
-            break
+    print("Number of processors: ", mp.cpu_count())
+    pool = mp.Pool(mp.cpu_count())
 
-    print('Time to parse articles: {} mins'.format(round((time.time() - t) / 60, 2)))
-    print("Total Annotations:",count)
+    t = time.time()
+    documents = []
+    counter = 0
+    for doc in solr.search('*:*',sort='id ASC',cursorMark='*'):
+        counter += 1
+        if (len(documents) == 100):
+            print(counter,"paragraphs: annotating 100")
+            paragraphs = pool.map(annotators.parse,documents)
+            solr.add(paragraphs)
+
+    print('Time to annotate paragraphs: {} mins'.format(round((time.time() - t) / 60, 2)))
+    print("Total Annotations:",counter)

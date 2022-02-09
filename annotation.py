@@ -48,13 +48,3 @@ class Annotation():
 
     def has_genetics(self):
         return len(self.genetics) > 0
-
-
-if __name__ == '__main__':
-
-    text = "We found that OC43 was the species that was most commonly detected, which is in line with earlier studies [1-3, 5, 10, 13, 26, 27] . The odds ratio for positive samples in our study was significantly lower for females than males. This gender difference is interesting in relation to COVID-19, as male patients have a higher risk of severe disease and death than females [28, 29] . We noted CoV infections across all age strata, although the highest prevalence was observed among children. At species level, the fraction of positive samples was relatively even across age strata for 229E and OC43. In contrast, HKU1 and NL63 showed a declining prevalence with increasing age. Collectively, our results indicate that symptomatic CoV reinfections among adults and elderly are not uncommon even though we did not formally exclude the possibility that they had primary CoV infections through serological testing."
-    annotation = Annotation(text)
-    print("Chemicals:",annotation.get_chemicals())
-    print("Diseases:",annotation.get_diseases())
-    print("Covid:",annotation.get_covid())
-    print("Genetics:",annotation.get_genetics())
