@@ -7,7 +7,7 @@ Created on Tuesday June 1 12:52:05 2021
 """
 import json
 import hashlib
-import annotation
+import annotation as an
 
 def parse(article):
     result = {}
@@ -39,7 +39,7 @@ def parse(article):
                   paragraph['article_id_s']=data['paper_id']
                   paragraph['size_i']=len(body['text'])
 
-                  annotation = Annotation(txt)
+                  annotation = an.Annotation(txt)
                   paragraph['mesh_codes']=[]
                   paragraph['chemicals']=[]
                   paragraph['chemical_terms']=[]
@@ -123,7 +123,6 @@ def parse(article):
                           if ('ncbi_taxon_id' in genetic):
                              paragraph['ncbi_taxonomy'].append(genetic['ncbi_taxon_id'])
 
-                  print(paragraph)
                   paragraphs.append(paragraph)
 
           result['paragraphs']=paragraphs
