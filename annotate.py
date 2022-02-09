@@ -35,10 +35,12 @@ if __name__ == '__main__':
     counter = 0
     for doc in solr.search('*:*',sort='id ASC',cursorMark='*'):
         counter += 1
+        documents.append(doc)
         if (len(documents) == 100):
             print(counter,"paragraphs: annotating 100")
             paragraphs = pool.map(annotators.parse,documents)
             solr.add(paragraphs)
+            documents = []
 
     print('Time to annotate paragraphs: {} mins'.format(round((time.time() - t) / 60, 2)))
     print("Total Annotations:",counter)
