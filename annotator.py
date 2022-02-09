@@ -59,7 +59,7 @@ def parse(paragraph):
                   if ('semantic_type' in disease):
                      paragraph['disease_types'].append(disease['semantic_type'])
                   if ('cui' in disease):
-                     paragraph['cui_codes'].extend(str(disease['cui']))
+                     paragraph['cui_codes'].extend(disease['cui'])
                   if ('mesh_id' in disease):
                      paragraph['mesh_codes'].append(str(disease['mesh_id']))
                   if ('cross_references' in disease):
@@ -89,7 +89,7 @@ def parse(paragraph):
                   if ('text_term' in genetic):
                      paragraph['genetic_terms'].append(genetic['text_term'])
                   if ('uniprot_id' in genetic):
-                     paragraph['uniprot_codes'].extend(str(genetic['uniprot_id']))
+                     paragraph['uniprot_codes'].extend(genetic['uniprot_id'])
                   if ('type' in genetic):
                      paragraph['genetic_types'].extend(genetic['type'])
                   if ('ncbi_gene_id' in genetic):
@@ -101,3 +101,10 @@ def parse(paragraph):
         print("Missing attribute:",e)
 
     return paragraph
+
+
+if __name__ == '__main__':
+
+    paragraph = {'text_t':"Despite over 300 active and recruiting clinical trials and a number of trials already completed, there is still no robust evidence that any of the investigated therapeutics are effective as treatments for COVID-19 disease (Channappanavar et al., 2017) . Equally, there is no evidence to support prophylactic treatment either (Sanders et al., 2020) . However, there are only 29 trials in adult patients with placebo-controlled arm (Channappanavar et al., 2017) . Various types of pharmacological treatments are currently under investigation including anti-viral, anti-malarial and anti-inflammatory agents. These therapies generally target the following processes: (1) the entry of the virus into host cells, (2) multiplication of the viral genetic material, and (3) immune response/inflammation. Most of these agents have been previously used as treatments for SARS-CoV and MERS-CoV, however the overall conclusions of the meta-analyses published in 2006 and 2018, respectively, did not support the use of any particular regimen. In relation to the meta-analysis of SARS-CoV treatments, the authors systematically reviewed 54 treatment studies, 15 in vitro studies and three ARDS studies (Stockman et al., 2006) . Although the combination of ribavirin and interferon-based (IFN) treatments appears the most effective for MERS (Morra et al., 2018) , this needs to be confirmed in randomized placebo-controlled trial settings. In terms of vaccines, there are at least 115 vaccine candidates in development with a number of these already initiated in human trials, however we expect vaccines to be available to people under emergency use only in early 2021 (Callaway, 2020; Thanh Le et al., 2020) ."}
+    annotation = parse(paragraph)
+    print(annotation)
