@@ -50,8 +50,10 @@ if __name__ == '__main__':
         papers = []
         paragraphs = []
         for result in results:
-            papers.append(result['paper'])
-            paragraphs.extend(result['paragraphs'])
+            if ('paper' in result):
+                papers.append(result['paper'])
+            if ('paragraphs' in result):
+                paragraphs.extend(result['paragraphs'])
         count_papers += len(papers)
         print("Papers added:",count_papers)
         solr_papers.add(papers)
