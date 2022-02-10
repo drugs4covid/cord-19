@@ -24,9 +24,9 @@ def parse(paragraph):
           if (annotation.has_chemicals()):
               for chemical in annotation.get_chemicals():
                   if ('found_term' in chemical):
-                      paragraph['chemicals'].append(chemical['found_term'])
+                      paragraph['chemicals_t'].append(chemical['found_term'])
                   if ('text_term' in chemical):
-                      paragraph['chemical_terms'].append(chemical['text_term'])
+                      paragraph['chemical_terms_t'].append(chemical['text_term'])
                   if ('ATC' in chemical):
                      paragraph['atc_codes_t'].append(str(chemical['ATC']))
                   if ('ATC_level' in chemical):
@@ -36,11 +36,11 @@ def parse(paragraph):
           if (annotation.has_diseases()):
               for disease in annotation.get_diseases():
                   if ('found_term' in disease):
-                     paragraph['diseases'].append(disease['found_term'])
+                     paragraph['diseases_t'].append(disease['found_term'])
                   if ('text_term' in disease):
-                     paragraph['disease_terms'].append(disease['text_term'])
+                     paragraph['disease_terms_t'].append(disease['text_term'])
                   if ('semantic_type' in disease):
-                     paragraph['disease_types'].append(disease['semantic_type'])
+                     paragraph['disease_types_t'].append(disease['semantic_type'])
                   if ('cui' in disease):
                      paragraph['cui_codes_t'].extend(disease['cui'])
                   if ('mesh_id' in disease):
@@ -62,15 +62,15 @@ def parse(paragraph):
           if (annotation.has_covid()):
               for covid in annotation.get_covid():
                   if ('found_term' in covid):
-                     paragraph['covid'].append(covid['found_term'])
+                     paragraph['covid_t'].append(covid['found_term'])
                   if ('text_term' in covid):
-                     paragraph['covid_terms'].append(covid['text_term'])
+                     paragraph['covid_terms_t'].append(covid['text_term'])
           if (annotation.has_genetics()):
               for genetic in annotation.get_genetics():
                   if ('found_term' in genetic):
-                     paragraph['genetics'].append(genetic['found_term'])
+                     paragraph['genetics_t'].append(genetic['found_term'])
                   if ('text_term' in genetic):
-                     paragraph['genetic_terms'].append(genetic['text_term'])
+                     paragraph['genetic_terms_t'].append(genetic['text_term'])
                   if ('uniprot_id' in genetic):
                      paragraph['uniprot_codes_t'].extend(genetic['uniprot_id'])
                   if ('type' in genetic):
