@@ -14,30 +14,13 @@ def parse(paragraph):
       if ('text_t' in paragraph):
           txt = paragraph['text_t']
           annotation = an.Annotation(txt)
-          paragraph['mesh_codes']=[]
-          paragraph['chemicals']=[]
-          paragraph['chemical_terms']=[]
-          paragraph['atc_codes']=[]
-          paragraph['atc_levels']=[]
-          paragraph['cid_codes']=[]
-          paragraph['doid_codes']=[]
-          paragraph['cui_codes']=[]
-          paragraph['icd10_codes']=[]
-          paragraph['icd9_codes']=[]
-          paragraph['gard_codes']=[]
-          paragraph['snomed_codes']=[]
-          paragraph['nci_codes']=[]
-          paragraph['ncbi_codes']=[]
-          paragraph['ncbi_taxonomy']=[]
-          paragraph['uniprot_codes']=[]
-          paragraph['diseases']=[]
-          paragraph['disease_terms']=[]
-          paragraph['disease_types']=[]
-          paragraph['covid']=[]
-          paragraph['covid_terms']=[]
-          paragraph['genetics']=[]
-          paragraph['genetic_terms']=[]
-          paragraph['genetic_types']=[]
+          fields = ['mesh_codes','chemicals','chemical_terms','atc_codes','atc_levels','cid_codes','doid_codes','cui_codes','icd10_codes','icd9_codes','gard_codes','snomed_codes','nci_codes','ncbi_codes','ncbi_taxonomy','uniprot_codes','diseases','disease_terms','disease_types','covid','covid_terms','genetics','genetic_terms','genetic_types']
+          # Initialize fields
+          for field in fields:
+              # Remove exiting ones to avoid type format error
+              paragraph.pop(field, None)
+              paragraph[field]=[]
+
           if (annotation.has_chemicals()):
               for chemical in annotation.get_chemicals():
                   if ('found_term' in chemical):
