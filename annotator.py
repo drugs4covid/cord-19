@@ -17,68 +17,66 @@ def parse(paragraph):
           fields = ['mesh_codes','chemicals','chemical_terms','atc_codes','atc_levels','cid_codes','doid_codes','cui_codes','icd10_codes','icd9_codes','gard_codes','snomed_codes','nci_codes','ncbi_codes','ncbi_taxonomy','uniprot_codes','diseases','disease_terms','disease_types','covid','covid_terms','genetics','genetic_terms','genetic_types']
           # Initialize fields
           for field in fields:
-              # Remove exiting ones to avoid type format error
-              paragraph.pop(field, None)
-              paragraph[field+"_t"]=[]
+              paragraph[field+"_ss"]=[]
 
           if (annotation.has_chemicals()):
               for chemical in annotation.get_chemicals():
                   if ('found_term' in chemical):
-                      paragraph['chemicals_t'].append(chemical['found_term'])
+                      paragraph['chemicals_ss'].append(chemical['found_term'])
                   if ('text_term' in chemical):
-                      paragraph['chemical_terms_t'].append(chemical['text_term'])
+                      paragraph['chemical_terms_ss'].append(chemical['text_term'])
                   if ('ATC' in chemical):
-                     paragraph['atc_codes_t'].append(str(chemical['ATC']))
+                     paragraph['atc_codes_ss'].append(str(chemical['ATC']))
                   if ('ATC_level' in chemical):
-                     paragraph['atc_levels_t'].append(str(chemical['ATC_level']))
+                     paragraph['atc_levels_ss'].append(str(chemical['ATC_level']))
                   if ('cid' in chemical):
-                     paragraph['cid_codes_t'].append(str(chemical['cid']))
+                     paragraph['cid_codes_ss'].append(str(chemical['cid']))
           if (annotation.has_diseases()):
               for disease in annotation.get_diseases():
                   if ('found_term' in disease):
-                     paragraph['diseases_t'].append(disease['found_term'])
+                     paragraph['diseases_ss'].append(disease['found_term'])
                   if ('text_term' in disease):
-                     paragraph['disease_terms_t'].append(disease['text_term'])
+                     paragraph['disease_terms_ss'].append(disease['text_term'])
                   if ('semantic_type' in disease):
-                     paragraph['disease_types_t'].append(disease['semantic_type'])
+                     paragraph['disease_types_ss'].append(disease['semantic_type'])
                   if ('cui' in disease):
-                     paragraph['cui_codes_t'].extend(disease['cui'])
+                     paragraph['cui_codes_ss'].extend(disease['cui'])
                   if ('mesh_id' in disease):
-                     paragraph['mesh_codes_t'].append(str(disease['mesh_id']))
+                     paragraph['mesh_codes_ss'].append(str(disease['mesh_id']))
                   if ('cross_references' in disease):
                       for reference in disease['cross_references']:
                           if (reference.startswith('ICD10CM')):
-                                paragraph['icd10_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['icd10_codes_ss'].append(str(reference.split(":")[1]))
                           elif (reference.startswith('ICD9CM')):
-                                paragraph['icd9_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['icd9_codes_ss'].append(str(reference.split(":")[1]))
                           elif (reference.startswith('SNOMEDCT')):
-                                paragraph['snomed_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['snomed_codes_ss'].append(str(reference.split(":")[1]))
                           elif (reference.startswith('DOID')):
-                                paragraph['doid_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['doid_codes_ss'].append(str(reference.split(":")[1]))
                           elif (reference.startswith('NCI')):
-                                paragraph['nci_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['nci_codes_ss'].append(str(reference.split(":")[1]))
                           elif (reference.startswith('GARD')):
-                                paragraph['gard_codes_t'].append(str(reference.split(":")[1]))
+                                paragraph['gard_codes_ss'].append(str(reference.split(":")[1]))
           if (annotation.has_covid()):
               for covid in annotation.get_covid():
                   if ('found_term' in covid):
-                     paragraph['covid_t'].append(covid['found_term'])
+                     paragraph['covid_ss'].append(covid['found_term'])
                   if ('text_term' in covid):
-                     paragraph['covid_terms_t'].append(covid['text_term'])
+                     paragraph['covid_terms_ss'].append(covid['text_term'])
           if (annotation.has_genetics()):
               for genetic in annotation.get_genetics():
                   if ('found_term' in genetic):
-                     paragraph['genetics_t'].append(genetic['found_term'])
+                     paragraph['genetics_ss'].append(genetic['found_term'])
                   if ('text_term' in genetic):
-                     paragraph['genetic_terms_t'].append(genetic['text_term'])
+                     paragraph['genetic_terms_ss'].append(genetic['text_term'])
                   if ('uniprot_id' in genetic):
-                     paragraph['uniprot_codes_t'].extend(genetic['uniprot_id'])
+                     paragraph['uniprot_codes_ss'].extend(genetic['uniprot_id'])
                   if ('type' in genetic):
-                     paragraph['genetic_types_t'].extend(genetic['type'])
+                     paragraph['genetic_types_ss'].extend(genetic['type'])
                   if ('ncbi_gene_id' in genetic):
-                     paragraph['ncbi_codes_t'].append(str(genetic['ncbi_gene_id']))
+                     paragraph['ncbi_codes_ss'].append(str(genetic['ncbi_gene_id']))
                   if ('ncbi_taxon_id' in genetic):
-                     paragraph['ncbi_taxonomy_t'].append(str(genetic['ncbi_taxon_id']))
+                     paragraph['ncbi_taxonomy_ss'].append(str(genetic['ncbi_taxon_id']))
 
     except AttributeError as e:
         print("Missing attribute:",e)
