@@ -11,7 +11,7 @@ import time
 import sys
 import requests
 import multiprocessing as mp
-
+from datetime import datetime
 
 if __name__ == '__main__':
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         counter += 1
         documents.append(doc)
         if (len(documents) == 100):
-            print(counter,"paragraphs: annotating 100")
+            print("[",datetime.now(),"]",counter,"paragraphs: annotating 100")
             paragraphs = pool.map(annotators.parse,documents)
             solr.add(paragraphs)
             documents = []
