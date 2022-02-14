@@ -16,9 +16,16 @@ def parse(paragraph):
           annotation = an.Annotation(txt)
           fields = ['mesh_codes','chemicals','chemical_terms','atc_codes','atc_levels','cid_codes','doid_codes','cui_codes','icd10_codes','icd9_codes','gard_codes','snomed_codes','nci_codes','ncbi_codes','ncbi_taxonomy','uniprot_codes','diseases','disease_terms','disease_types','covid','covid_terms','genetics','genetic_terms','genetic_types']
           # Initialize fields
+          annotated = False
           for field in fields:
-              paragraph[field+"_ss"]=[]
-
+              field_name = field+"_ss"
+              if (field_name in paragraph):
+                  annotated = True
+              else:
+                  paragraph[field+"_ss"]=[]
+          if (annotated):
+              print(paragraph['id'],"already annotated")
+              return paragraph
           if (annotation.has_chemicals()):
               for chemical in annotation.get_chemicals():
                   if ('found_term' in chemical):
