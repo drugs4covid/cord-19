@@ -85,7 +85,7 @@ def parse(paragraph):
                   if ('ncbi_taxon_id' in genetic):
                      paragraph['ncbi_taxonomy_ss'].append(str(genetic['ncbi_taxon_id']))
 
-    except AttributeError as e:
+    except Exception as e:
         print("Missing attribute:",e)
 
     return paragraph

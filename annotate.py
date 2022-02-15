@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # Load articles
     #solr = pysolr.Solr(server+'/cord19-papers', always_commit=True, timeout=50)
     url = server+'/cord19-paragraphs'
-    solr = pysolr.Solr(url, always_commit=True, timeout=50)
+    solr = pysolr.Solr(url, always_commit=True, timeout=120)
     print("reading paragraphs from:",url)
 
     print("Number of processors: ", mp.cpu_count())
@@ -34,13 +34,15 @@ if __name__ == '__main__':
     documents = []
     counter = 0
     for doc in solr.search('*:*',sort='id ASC',cursorMark='*'):
-        counter += 1
-        documents.append(doc)
-        if (len(documents) == 100):
-            print("[",datetime.now(),"]",counter,"paragraphs: annotating 100")
-            paragraphs = pool.map(annotators.parse,documents)
-            solr.add(paragraphs)
-            documents = []
-
+        try:
+            counter += 1
+            documents.append(doc)
+            if (len(documents) == 100):
+                print("[",datetime.now(),"]",counter,"paragraphs: annotating 100")
+                paragraphs = pool.map(annotators.parse,documents)
+                solr.add(paragraphs)
+                documents = []
+        except Exception as e:
+            print("Error saving in solr:",e)        
     print('Time to annotate paragraphs: {} mins'.format(round((time.time() - t) / 60, 2)))
     print("Total Annotations:",counter)
