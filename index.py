@@ -31,6 +31,13 @@ if __name__ == '__main__':
     print("loading files from:",directory)
     files = [ os.path.join(directory, entry) for entry in os.listdir(directory) if os.path.isfile(os.path.join(directory, entry))]
     print(len(files),"files available")
+    #new_files = []
+    #for file in files[:2]:
+    #    data = json.load(file)
+    #    id = data['paper_id']
+    #    filter_queries = ['id:'+id]
+    #    results = solr_papers.search('', fq=filter_queries, rows=1)
+    #    print(results)
 
     print("Number of processors: ", mp.cpu_count())
     pool = mp.Pool(mp.cpu_count())
