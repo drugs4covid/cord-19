@@ -38,7 +38,7 @@ def parse(article):
                   paragraph['section_s']=body['section']
                   paragraph['article_id_s']=data['paper_id']
                   paragraph['size_i']=len(body['text'])
-                  paragraphs.append(annotators.parse(paragraph))
+                  paragraphs.append(paragraph)
 
           result['paragraphs']=paragraphs
 
@@ -76,7 +76,7 @@ def parse_and_annotate(article):
                   paragraph['section_s']=body['section']
                   paragraph['article_id_s']=data['paper_id']
                   paragraph['size_i']=len(body['text'])
-                  paragraphs.append(paragraph)
+                  paragraphs.append(annotators.parse(paragraph))
 
           result['paragraphs']=paragraphs
 
