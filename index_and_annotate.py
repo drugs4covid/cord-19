@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     increment = 10
     min_idx = 0
-    max_idx = increment
+    max_idx = min_idx + increment
     t = time.time()
     count_papers = 0
     count_paragraphs = 0
