@@ -38,7 +38,7 @@ if __name__ == '__main__':
     print("Number of processors: ", num_parallel)
     pool = mp.Pool(num_parallel)
 
-    increment = 10
+    increment = 100
     min_idx = 0
     max_idx = min_idx + increment
     t = time.time()
@@ -53,14 +53,24 @@ if __name__ == '__main__':
             for result in results:
                 if ('paper' in result):
                     papers.append(result['paper'])
+                    num_papers = len(papers)
+                    if (num_papers >= 100):
+                        print("saving", num_papers, "papers..")
+                        solr_papers.add(papers)
+                        papers = []
                 if ('paragraphs' in result):
                     paragraphs.extend(result['paragraphs'])
-            count_papers += len(papers)
-            print("Papers added:",count_papers)
-            solr_papers.add(papers)
-            count_paragraphs += len(paragraphs)
-            print("Paragraphs added:",count_paragraphs)
-            solr_paragraphs.add(paragraphs)
+                    num_paragraphs = len(paragraphs)
+                    if (num_paragraphs >= 100):
+                        print("saving", num_paragraphs, "paragraphs..")
+                        solr_paragraphs.add(paragraphs)
+                        paragraphs = []
+            if (len(papers) > 0):
+                print("saving the rest of",len(papers),"papers..")
+                solr_papers.add(papers)
+            if (len(paragraphs) > 0):
+                print("saving the rest of",len(paragraphs),"paragraphs..")
+                solr_paragraphs.add(paragraphs)
             min_idx = max_idx
             max_idx = min_idx + increment
         except Exception as e:
