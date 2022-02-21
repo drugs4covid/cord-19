@@ -7,7 +7,7 @@ Created on Tuesday June 1 12:52:05 2021
 """
 import json
 import hashlib
-import annotator as annotators
+import bioannotator as annotators
 
 def parse(article):
     result = {}
