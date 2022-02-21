@@ -133,5 +133,7 @@ def parse(paragraph):
 if __name__ == '__main__':
 
     paragraph = {'text_t':"We have carried out a retrospective study on all cases of acute C. difficile infection in children admitted in the Pediatric Department of the National Institute of Infectious Diseases \"Prof. Dr. Matei Balș\" between 2013 and 2016. In all patients we have monitored age, sex, immunological status, clinical form of disease, and evolution under treatment. The diagnosis of colitis was established based on clinical criteria and confirmed through laboratory methods (detection of C. difficile A/B toxin from stool). All cases received treatment according to standard protocol except for one case where allergies to all antibiotics from the therapeutic schemes prompted us to perform fecal microbiota transplantation."}
+    print("annotating paragraph...")
     annotation = parse(paragraph)
+    print("done!")
     print(annotation)

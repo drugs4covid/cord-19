@@ -21,7 +21,7 @@ class BioProcessor:
             print('No GPU available, using the CPU instead.')
             self.gpu_flag = False
             device = torch.device("cpu")
-            torch.set_num_threads(int(multiprocessing.cpu_count()/2))
+            torch.set_num_threads(int(multiprocessing.cpu_count()))
 
         self.model_name = model_name
         # print(self.model_name)
@@ -30,7 +30,7 @@ class BioProcessor:
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
             use_fast=True,
-            return_offsets_mapping=False
+            return_offsets_mapping=True
         )
         # print('tokenizer set')
         self.model = AutoModelForTokenClassification.from_pretrained(
@@ -49,7 +49,7 @@ class BioProcessor:
                 print('It was not possible to allocate model pipeline in GPU, setting it on CPU')
                 self.gpu_flag = False
                 device = torch.device("cpu")
-                torch.set_num_threads(int(multiprocessing.cpu_count()/2))
+                torch.set_num_threads(int(multiprocessing.cpu_count()))
                 self.config = AutoConfig.from_pretrained(self.model_name)
                 self.tokenizer = AutoTokenizer.from_pretrained(
                     self.model_name,
@@ -70,12 +70,24 @@ class BioProcessor:
                                                         grouped_entities=True,
                                                         )
         # print('pipeline set')
-        #self.sequence = ''
-        #self.offset = 0
-        #self.results = {}
+        self.sequence = ''
+        self.offset = 0
+        self.results = {}
 
-    def predict(self, sequence):
-        print("predict:",sequence)
-        results =  self.pipeline(str(sequence))
-        print("results:",results)
-        return results
+    def sentence_to_process(self, sequence):
+        self.sequence = sequence
+
+    def set_offset(self, offset, restart=False):
+        if restart:
+            self.offset = 0
+        else:
+            self.offset = offset
+
+    def predict(self):
+        results = self.pipeline(self.sequence)
+        if self.offset > 0:
+            for result in results:
+                result['start'] += self.offset
+                result['end'] += self.offset
+        self.results = results
+        return self.results
