@@ -57,7 +57,7 @@ if __name__ == '__main__':
                 paragraphs.extend(result['paragraphs'])
                 num_paragraphs += len(result['paragraphs'])
         except Exception as e:
-            print("Error reading file:"file, " => ",e)
+            print("Error reading file:",file, " => ",e)
 
     print('Time to parse articles: {} mins'.format(round((time.time() - t) / 60, 2)))
     print("Total Articles:",num_papers)
