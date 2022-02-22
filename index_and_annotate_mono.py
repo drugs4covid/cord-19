@@ -41,21 +41,22 @@ if __name__ == '__main__':
     paragraphs = []
     for file in files:
         try:
-            if (num_papers >= window):
-                print("[",datetime.now(),"] indexing papers: ", num_papers)
-                solr_papers.add(papers)
-                papers = []
-            if (num_paragraphs >= window):
-                print("[",datetime.now(),"] indexing paragraphs: ", num_paragraphs)
-                solr_paragraphs.add(paragraphs)
-                paragraphs = []
             result = workers.parse_and_annotate(file)
             if ('paper' in result):
                 papers.append(result['paper'])
                 num_papers += 1
+                if (num_papers % window == 0):
+                    print("[",datetime.now(),"] indexing papers: ", num_papers)
+                    solr_papers.add(papers)
+                    papers = []
             if ('paragraphs' in result):
                 paragraphs.extend(result['paragraphs'])
-                num_paragraphs += len(result['paragraphs'])
+                paper_paragraphs = len(result['paragraphs'])
+                num_paragraphs += paper_paragraphs
+                if (num_paragraphs % window == 0):
+                    print("[",datetime.now(),"] indexing paragraphs: ", num_paragraphs,"/",paper_paragraphs)
+                    solr_paragraphs.add(paragraphs)
+                    paragraphs = []
         except Exception as e:
             print("Error reading file:",file, " => ",e)
 
