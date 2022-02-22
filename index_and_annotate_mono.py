@@ -45,15 +45,14 @@ if __name__ == '__main__':
             if ('paper' in result):
                 papers.append(result['paper'])
                 num_papers += 1
-                if (num_papers % window == 0):
+                if (len(papers) >= window):
                     print("[",datetime.now(),"] indexing papers: ", num_papers, "/", len(papers))
                     solr_papers.add(papers)
                     papers = []
             if ('paragraphs' in result):
                 paragraphs.extend(result['paragraphs'])
-                paper_paragraphs = len(result['paragraphs'])
-                num_paragraphs += paper_paragraps
-                if (num_paragraphs % window == 0):
+                num_paragraphs += len(result['paragraphs'])
+                if (len(paragraphs) >= window):
                     print("[",datetime.now(),"] indexing paragraphs: ", num_paragraphs,"/",len(paragraphs))
                     solr_paragraphs.add(paragraphs)
                     paragraphs = []
