@@ -46,20 +46,24 @@ if __name__ == '__main__':
                 papers.append(result['paper'])
                 num_papers += 1
                 if (num_papers % window == 0):
-                    print("[",datetime.now(),"] indexing papers: ", num_papers)
+                    print("[",datetime.now(),"] indexing papers: ", num_papers, "/", len(papers))
                     solr_papers.add(papers)
                     papers = []
             if ('paragraphs' in result):
                 paragraphs.extend(result['paragraphs'])
                 paper_paragraphs = len(result['paragraphs'])
-                num_paragraphs += paper_paragraphs
+                num_paragraphs += paper_paragraps
                 if (num_paragraphs % window == 0):
-                    print("[",datetime.now(),"] indexing paragraphs: ", num_paragraphs,"/",paper_paragraphs)
+                    print("[",datetime.now(),"] indexing paragraphs: ", num_paragraphs,"/",len(paragraphs))
                     solr_paragraphs.add(paragraphs)
                     paragraphs = []
         except Exception as e:
             print("Error reading file:",file, " => ",e)
 
+    print("[",datetime.now(),"] indexing last papers: ", num_papers, "/", len(papers))
+    solr_papers.add(papers)
+    print("[",datetime.now(),"] indexing last paragraphs: ", num_paragraphs,"/",len(paragraphs))
+    solr_paragraphs.add(paragraphs)
     print('Time to parse articles: {} mins'.format(round((time.time() - t) / 60, 2)))
     print("Total Articles:",num_papers)
     print("Total Paragraphs:",num_paragraphs)
