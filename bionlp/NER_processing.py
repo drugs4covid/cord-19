@@ -35,13 +35,13 @@ class NERComponent:
         self.entities = None
 
     def __call__(self, doc: Doc) -> Doc:
-        print("NER Component __call__ > START")
+        #print("NER Component __call__ > START")
         self.entities = Entities(doc)
-        print("NER Component __call__ : entities!")
+        #print("NER Component __call__ : entities!")
         process_by_paragraph(doc, self.entities)
-        print("NER Component __call__ : paragraphs!")
+        #print("NER Component __call__ : paragraphs!")
         self.entities.postprocessing()
-        print("NER Component __call__ END")
+        #print("NER Component __call__ END")
         return doc
 
 

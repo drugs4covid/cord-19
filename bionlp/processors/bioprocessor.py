@@ -75,7 +75,7 @@ class BioProcessor:
         #self.results = {}
 
     def predict(self, sequence):
-        print("predict:",sequence)
+        #print("predict:",sequence)
         results =  self.pipeline(str(sequence))
-        print("results:",results)
+        #print("results:",results)
         return results
