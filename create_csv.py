@@ -44,16 +44,17 @@ if __name__ == '__main__':
                 id = data['paper_id']
                 metadata = data['metadata']
                 title = metadata['title']
-                abstract_text = ""
                 if (len(data['abstract'])>0):                    
+                    abstract_text = ""
                     for abstract in data['abstract']:
                         abstract_text += abstract['text'] + " "
-                if (len(abstract_text) > min_abstract_size):
-                    num_papers += 1
-                    row = [id, title, abstract_text]
-                    writer.writerow(row)
+                    if ((len(abstract_text) > min_abstract_size) and (len(title) > 10)):
+                        num_papers += 1
+                        row = [id, title, abstract_text]
+                        writer.writerow(row)
         except Exception as e:
             print("Error reading file:",file, " => ",e)
 
     csv_file.close()
     print("[",datetime.now(),"] Total Articles:",num_papers)
+    print("data.csv created succesfully")
