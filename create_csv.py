@@ -26,8 +26,8 @@ if __name__ == '__main__':
     total_files = len(files)
     print("[",datetime.now(),"] files available: ",total_files)
 
-    file = open('data.csv','w',encoding='UTF8', newline='')
-    writer = csv.writer(file)
+    csv_file = open('data.csv','w',encoding='UTF8', newline='')
+    writer = csv.writer(csv_file)
     header = ['id', 'title', 'abstract']
     # write the header
     writer.writerow(header)
@@ -55,5 +55,5 @@ if __name__ == '__main__':
         except Exception as e:
             print("Error reading file:",file, " => ",e)
 
-    file.close()
+    csv_file.close()
     print("[",datetime.now(),"] Total Articles:",num_papers)
