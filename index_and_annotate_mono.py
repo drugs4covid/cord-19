@@ -29,7 +29,7 @@ if __name__ == '__main__':
     print("loading files from:",directory)
     files = [ os.path.join(directory, entry) for entry in os.listdir(directory) if os.path.isfile(os.path.join(directory, entry))]
     total_files = len(files)
-    print(total_files,"files available")
+    print("[",datetime.now(),"] files available: ",total_files)
 
     solr_papers = pysolr.Solr(server+'/cord19-papers', always_commit=True, timeout=120)
     solr_paragraphs = pysolr.Solr(server+'/cord19-paragraphs', always_commit=True, timeout=120)
