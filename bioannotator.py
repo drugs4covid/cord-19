@@ -10,7 +10,8 @@ import hashlib
 import annotation as an
 import os
 import inspect
-from bionlp import nlp, disease_service, chemical_service, genetic_service
+import bionlp as bionlp
+#from bionlp import nlp, disease_service, chemical_service, genetic_service
 
 def group_in_dict(normalized_ent):
     normalized_ents = {}
@@ -34,7 +35,7 @@ def parse(paragraph):
             fields = ['mesh_codes','chemicals','chemical_terms','chebi_codes','atc_codes','atc_levels','cid_codes','doid_codes','cui_codes','icd10_codes','icd9_codes','gard_codes','snomed_codes','nci_codes','ncbi_codes','ncbi_taxonomy','uniprot_codes','diseases','disease_terms','disease_types','genetics','genetic_terms','genetic_types']
             for field in fields:
                 paragraph[field+"_ss"]=[]
-            doc = nlp(str(paragraph['text_t']))
+            doc = bionlp.nlp(str(paragraph['text_t']))
             paragraph['diseases_ss'] = list({f.text for f in doc.ents if f.label_ == 'DISEASE'})
             paragraph['chemicals_ss'] = list({f.text for f in doc.ents if f.label_ == 'CHEMICAL'})
             paragraph['genetics_ss'] = list({f.text for f in doc.ents if f.label_ == 'GENETIC'})
@@ -132,7 +133,7 @@ def parse(paragraph):
 
 if __name__ == '__main__':
 
-    paragraph = {'text_t':"We have carried out a retrospective study on all cases of acute C. difficile infection in children admitted in the Pediatric Department of the National Institute of Infectious Diseases \"Prof. Dr. Matei Balș\" between 2013 and 2016. In all patients we have monitored age, sex, immunological status, clinical form of disease, and evolution under treatment. The diagnosis of colitis was established based on clinical criteria and confirmed through laboratory methods (detection of C. difficile A/B toxin from stool). All cases received treatment according to standard protocol except for one case where allergies to all antibiotics from the therapeutic schemes prompted us to perform fecal microbiota transplantation."}
+    paragraph = {'text_t':"Since its outbreak in 2019, there has been a global effort to understand the impact of SARS-CoV-2 infection on organ health, both in the acute and medium-to-long term phases. Despite being predominantly a respiratory illness, emerging data suggest that damage to multiple organs is common, particularly among those with moderate to severe infections (Guan et al., 2020; Huang et al., 2020) . A holistic approach to systematically assess the health of multiple vital organs could therefore be advantageous."}
     print("annotating paragraph...")
     annotation = parse(paragraph)
     print("done!")
