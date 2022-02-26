@@ -40,13 +40,13 @@ def parse(paragraph):
             paragraph['chemicals_ss'] = list({f.text for f in doc.ents if f.label_ == 'CHEMICAL'})
             paragraph['genetics_ss'] = list({f.text for f in doc.ents if f.label_ == 'GENETIC'})
 
-            normalized_chem = chemical_service.normalize_chemical_entities(paragraph['chemicals_ss'])
-            normalized_d = disease_service.normalize_disease_entities(paragraph['diseases_ss'])
-            normalized_g = genetic_service.normalize_genetic_entities(paragraph['genetics_ss'])
+            normalized_chem = bionlp.chemical_service.normalize_chemical_entities(paragraph['chemicals_ss'])
+            normalized_d = bionlp.disease_service.normalize_disease_entities(paragraph['diseases_ss'])
+            normalized_g = bionlp.genetic_service.normalize_genetic_entities(paragraph['genetics_ss'])
 
-            normalized_chems = group_in_dict(normalized_chem)
-            normalized_dis = group_in_dict(normalized_d)
-            normalized_gen = group_in_dict(normalized_g)
+            normalized_chems = bionlp.group_in_dict(normalized_chem)
+            normalized_dis = bionlp.group_in_dict(normalized_d)
+            normalized_gen = bionlp.group_in_dict(normalized_g)
 
             if 'found_term' in normalized_chems:
                 paragraph['chemical_terms_ss'].extend(normalized_chems['found_term'])
